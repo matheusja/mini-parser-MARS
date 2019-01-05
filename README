@@ -1,0 +1,78 @@
+
+######################
+  O que é isso?
+######################
+
+Esse é um parser que lê expressões com números(sem sinal, porém podem ter mais de um dígito), com as 4 operações(+, -, * e /) e com parentesis;
+Ele utiliza a precedência usual(da maior prioridade para a menor):
+1. Parêntesis
+2. * e /
+3. + e -
+4. (Para operações com mesma prioridade) O que estiver mais a esquerda
+
+Ao ser iniciado, ele irá mostrar um pop-up pedindo o nome do arquivo a ser lido(. Se nada for colocado, ele irá mostrar outro pop-up pedindo o texto a ser lido;
+O texto a ser lido pelo pop-up é limitado pelo buffer(65535 caracteres), enquanto o texto lido em um arquivo pode ter o tamanho arbitrario;
+A expressão pode ter espaços, tabs, nova-linha(ao ler um arquivo) e, comentários, que começam com # e terminam com uma nova-linha(ao ler um arquivo);
+Eles são ignorados pelo parser;
+
+##############
+ O que fazer?
+##############
+
+Ele foi testado com o MARS[1] (bem abaixo)
+Após ele ser lido e a arvore sintatica ser montada, será lançado um pop-up perguntando o que deve ser feito:
+0 - Colocar parêntesis na expressão
+Essa opção imprime, NA SAIDA PADRAO(e NÃO no POP-UP) a expressão colocando parêntesis em volta de cada operação(1 operação => 1 par de parêntesis), por exemplo:
+1+2*3   => (1+(2*3))
+1-2*3   => (1-(2*3))
+1*2+3   => ((1*2)+3)
+(((1))) => 1
+A disposição dos parêntesis pode ser usada para verificar se o parser está lendo com as precedências certas
+
+1 - Mostrar(em notacao) a arvore sintatica
+Essa opção imprimie uma expressão na notação "Labeled bracketing"[2] que, ao ser colocada em um site como algum da lista: 
+    http://mshang.ca/syntree/
+    http://www.ironcreek.net/phpsyntaxtree/
+	https://yohasebe.com/rsyntaxtree/
+	...
+(Pesquisar na internet por "Syntax Tree Generator")
+Pode ser usado para elaborar uma árvore sintática graficamente;
+
+2 - Escrever em notação polonesa reversa
+Basicamente, são os números seguidos das operações:
+1+2   => 1 2 +
+1+2*3 => 1 2 3 * +
+Observe que, nessa notação, a primeira operação encontrada é a primeira a ser feita;
+Para saber mais:
+[2] https://en.wikipedia.org/wiki/Reverse_Polish_notation
+
+3 - Calcular o valor
+Essa opção simplesmente avalia o valor da operação e coloca um popup com o seu valor
+A divisões arredondam para baixo e não há verificações para divisão por 0;
+
+Após escolhida uma opção válida, o pop-up irá reaparecer perguntando novamente, quando não quiser mais, simplesmente clique em "cancelar" ou clique em "OK" não tendo um valor válido
+
+##############
+   Repetição
+##############
+
+Após isso, o programa irá perguntar se o usuário quer fazer outra leitura; Ao clicar em "Não" ou em "Cancelar", o programa encerra a execução, senão, ele retorna ao início e lança o primeiro pop-up novamente
+
+######################
+   Alguns cuidados:
+######################
+
+1. O arquivo a ser construído é o "parser.asm", não deve-se tentar construir o "header.asm", nem o "lexer.asm", nem o "ast.asm"
+2. São 4 arquivos, apesar de apenas o "parser.asm" ser construído, os outros 3 são incluídos pela diretiva ".include" do MARS, logo precisam estar na mesma pasta
+3. Habilite as Pseudo-Instruções
+4. Tome cuidado para que o arquivo a ser lido realmente está na mesma pasta em que o MARS está sendo executado:
+(Windows:) A pasta em que o MARS está sendo executado é a pasta em que o MARS.jar está
+(Ubuntu:) A pasta em que o MARS está sendo executado é a pasta do usuário que o executou
+...
+Regra geral: clique em "Abrir arquivo", a pasta que foi aberta para escolher o arquivo é a pasta em que o MARS está sendo executado
+
+
+
+
+[1] https://courses.missouristate.edu/KenVollmar/MARS/
+[2] https://www.ling.upenn.edu/courses/Spring_2001/ling150/box-bracketing.html

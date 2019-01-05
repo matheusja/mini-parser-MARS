@@ -1,0 +1,9 @@
+#Esse teste eh para ver se programa ignora o que deveria
+1  +  2
+
+#Observe que pode ter qualquer whitespace entre as operacoes
+* 
+#E comentarios
+3
+-4          /     5
+#1+2*3-4/5

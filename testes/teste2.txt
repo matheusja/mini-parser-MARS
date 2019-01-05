@@ -1,0 +1,2 @@
+#Esse teste avalia a capacidade de empilhar e desempilhar parentesis:
+(((((1)))))*2-3

@@ -1,0 +1,2 @@
+#Esse teste avalia numeros com mais de um digito
+8001*8002-(8003+8004)
