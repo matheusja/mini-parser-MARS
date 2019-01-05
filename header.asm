@@ -7,17 +7,17 @@
 
 
 # Syscall Codes
-.eqv iPrintInteger 1
-.eqv iPrintString  4
-.eqv iReadInteger  5
-.eqv iReadString   8
-.eqv iExitCode     10
-.eqv iPrintChar    11
-.eqv iOpenFileCode 13
-.eqv iReadFileCode 14
-.eqv iWriteCode    15
-.eqv iCloseCode    16
-.eqv iExitValCode  17
+.eqv iPrintInteger       1
+.eqv iPrintString        4
+.eqv iReadInteger        5
+.eqv iReadString         8
+.eqv iExitCode          10
+.eqv iPrintChar         11
+.eqv iOpenFileCode      13
+.eqv iReadFileCode      14
+.eqv iWriteCode         15
+.eqv iCloseCode         16
+.eqv iExitValCode       17
 .eqv iConfirmDialog     50
 .eqv iInputDialogInt    51
 .eqv iInputDialogString 54
@@ -130,8 +130,8 @@
   nop
 .end_macro
 .macro printChar(%str)
-	li rSyscall iPrintChar
-	li rOutChar %str
+  li rSyscall iPrintChar
+  li rOutChar %str
   syscall
 .end_macro
 .macro PUSH($r)
@@ -146,13 +146,13 @@
   lw $r 4($sp)
 .end_macro
 .data
-	erroBadCharDesc:      .asciiz "Erro: characterere desconhecido\n"
-	erroUnexpectedEOF:    .asciiz "Erro: final de arquivo inesperado\n"
-	erroLackParentesis:   .asciiz "Erro: falta fechar parentesis\n"
-	erroNumOPARExpected:  .asciiz "Erro: esperava um '(' ou um numero\n"
-	erroOPCPARExpected:   .asciiz "Erro: esperava um ')' ou um operador\n"
-	erroOpenFile:         .asciiz "Erro: nao foi possivel abrir o arquivo\n"
-	erroRead:             .asciiz "Erro: nao foi possivel ler arquiro\n"
+  erroBadCharDesc:      .asciiz "Erro: characterere desconhecido\n"
+  erroUnexpectedEOF:    .asciiz "Erro: final de arquivo inesperado\n"
+  erroLackParentesis:   .asciiz "Erro: falta fechar parentesis\n"
+  erroNumOPARExpected:  .asciiz "Erro: esperava um '(' ou um numero\n"
+  erroOPCPARExpected:   .asciiz "Erro: esperava um ')' ou um operador\n"
+  erroOpenFile:         .asciiz "Erro: nao foi possivel abrir o arquivo\n"
+  erroRead:             .asciiz "Erro: nao foi possivel ler arquiro\n"
 .text
 
 
