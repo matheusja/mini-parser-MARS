@@ -6,7 +6,7 @@
 .eqv AST_SIZE  16
 
 .macro printSimpleBinaryOp($ast, %str)
-	PEEK($ast)
+  PEEK($ast)
   lw $ast LEFT_POS($ast)
   jal codeGenUgly
   nop
@@ -17,9 +17,9 @@
   nop
 .end_macro
 .macro printUglyBinaryOp($ast, %str)
-	printChar(iASCII_OPAR)
-	printSimpleBinaryOp($ast, %str)
-	printChar(iASCII_CPAR)
+  printChar(iASCII_OPAR)
+  printSimpleBinaryOp($ast, %str)
+  printChar(iASCII_CPAR)
 .end_macro
 .macro printTreeOp($ast, %str)
   printChar(%str)
@@ -64,17 +64,18 @@
 # 16 Bytes
 
 pushNUM:
-	la $t0 space
-	lw $t1 ptr
-	add $t0 $t0 $t1
-	bne $t1 $zero continuarPush
-	nop
-	sw $zero PROX_POS($t0)
-	j pularPushProx
-	nop
-	continuarPush:
+  la $t0 space
+  lw $t1 ptr
+  add $t0 $t0 $t1
+  bne $t1 $zero continuarPush
+    nop
+    sw $zero PROX_POS($t0)
+  j pularPushProx
+  nop
+  continuarPush:
   addi $t2 $t0 -AST_SIZE
   sw $t2 PROX_POS($t0)
+  
   pularPushProx:
   sw $zero CODE_POS($t0)
   sw rVal  VAL_POS($t0)
@@ -82,37 +83,37 @@ pushNUM:
   sw $t1 ptr
 jr $ra
 nop
-#	OP = {
-#		Prox
-#		Code 			!= 0
-#		LeftArg		!= 0
-# 	RightArg	!= 0
+#  OP = {
+#    Prox
+#    Code       != 0
+#    LeftArg    != 0
+#    RightArg	!= 0
 # }
 # 16 Bytes
 pushOP:
-	lw $t1 ptr
-	la $t0 space
-	add $t0 $t0 $t1
-	#Vai ser algo do tipo: ...|arvore 0|arvore 1|arvore 2|operador
-	#Operador.right = arvore 2 = ultimo elemento inserido = $t2
-	addi $t2 $t0 -AST_SIZE
-	#Operador.left = arvore 1 = $t2.prox = $t3
-	lw $t3    PROX_POS($t2)
-	#Operador.prox = arvore 0 = $t3.prox = $t4
-	lw $t4    PROX_POS($t3)
-	sw $t4    PROX_POS($t0)
-	sw rCode  CODE_POS ($t0)
-	sw $t3    LEFT_POS ($t0)
-	sw $t2    RIGHT_POS($t0)
-	addi $t1 $t1 AST_SIZE
-	sw $t1 ptr
+  lw $t1 ptr
+  la $t0 space
+  add $t0 $t0 $t1
+  #Vai ser algo do tipo: ...|arvore 0|arvore 1|arvore 2|operador
+  #Operador.right = arvore 2 = ultimo elemento inserido = $t2
+  addi $t2 $t0 -AST_SIZE
+  #Operador.left = arvore 1 = $t2.prox = $t3
+  lw $t3    PROX_POS($t2)
+  #Operador.prox = arvore 0 = $t3.prox = $t4
+  lw $t4    PROX_POS($t3)
+  sw $t4    PROX_POS($t0)
+  sw rCode  CODE_POS ($t0)
+  sw $t3    LEFT_POS ($t0)
+  sw $t2    RIGHT_POS($t0)
+  addi $t1 $t1 AST_SIZE
+  sw $t1 ptr
 jr $ra
 nop
 getAST:
-	lw rReturn2 ptr
-	la rReturn  space
-	add rReturn rReturn rReturn2
-	addi rReturn rReturn -AST_SIZE
+  lw rReturn2 ptr
+  la rReturn  space
+  add rReturn rReturn rReturn2
+  addi rReturn rReturn -AST_SIZE
 jr $ra
 nop
 
@@ -165,8 +166,8 @@ nop
 codeGenTree:
   PUSH($ra)
   PUSH(rASTArg)
-	printChar(iASCII_OBRACK)
-	PEEK(rASTArg)
+    printChar(iASCII_OBRACK)
+    PEEK(rASTArg)
   lw $t0 CODE_POS(rASTArg)
   bne $t0 iNum codeGenTreeNotNum
   nop
@@ -206,7 +207,7 @@ codeGenTree:
   codeGenTreeNotDiv:
   codeGenTreeOut:
   
-	printChar(iASCII_CBRACK)
+    printChar(iASCII_CBRACK)
   POP(rASTArg)
   POP($ra)
 jr $ra
