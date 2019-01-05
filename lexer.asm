@@ -16,31 +16,31 @@
 
 .data
   input_file: .space iFileNameSize
-	file_descriptor: .word 0
-	buffer_pos: .word 0
-	buffer: .space iBufferSize
-	temp: .space 4
-	read_from_terminal: .word 0
+  file_descriptor: .word 0
+  buffer_pos: .word 0
+  buffer: .space iBufferSize
+  temp: .space 4
+  read_from_terminal: .word 0
 .text
 
 nextChar:
-	checkBuffer:
-    lw $t1 buffer_pos
-    lbu $t0 buffer($t1)
-    beq $t0 $zero read2buffer
+  checkBuffer:
+  lw $t1 buffer_pos
+  lbu $t0 buffer($t1)
+  beq $t0 $zero read2buffer
+  nop
+  read2reg:
+    la $t2 buffer
+    add $t2 $t2 $t1
+    lbu rReturn 0($t2)
+    addi $t1 $t1 1
+    sw $t1 buffer_pos
+  jr $ra
+  nop
+  read2buffer:
+    lw $t2 read_from_terminal
+    beq $t2 1 nextCharReturnEOF
     nop
-    read2reg:
-      la $t2 buffer
-      add $t2 $t2 $t1
-      lbu rReturn 0($t2)
-      addi $t1 $t1 1
-      sw $t1 buffer_pos
-   jr $ra
-   nop
-   read2buffer:
-      lw $t2 read_from_terminal
-      beq $t2 1 nextCharReturnEOF
-      nop
       li rSyscall iReadFileCode
       la rString buffer
       li rNumChar iBufferSizeM1
@@ -57,8 +57,6 @@ nextChar:
         li rReturn 0x100
       jr $ra
       nop
-  
-  
 jr $ra
 nop
 #Pode ocorrer(na hora que eu leio um numero) que eu li um caractere a mais("1232+" eu acabo lendo o '+')
@@ -160,24 +158,24 @@ nextToken:
   isASCIINum($t0, rReturn)
   beq $t0 $zero nextTokenNotNum
   nop
-  	li $s0 0
-  	li $s1 10
-  	loopParseInt:
-  		ASCII2Num($s2, rReturn)
- 		 	mult $s0 $s1
-  		mflo $s0
-  		add $s0 $s0 $s2
-			jal nextChar
-		  nop
-      isASCIINum($t0, rReturn)
-		beq $t0 1 loopParseInt
-		nop
-		jal ungetChar
-		nop
-		li rReturnCode  iNum
-		move rReturnVal $s0
-		j nextTokenOut
-		nop
+    li $s0 0
+    li $s1 10
+    loopParseInt:
+      ASCII2Num($s2, rReturn)
+      mult $s0 $s1
+      mflo $s0
+      add $s0 $s0 $s2
+    jal nextChar
+    nop
+    isASCIINum($t0, rReturn)
+    beq $t0 1 loopParseInt
+    nop
+    jal ungetChar
+    nop
+    li rReturnCode  iNum
+    move rReturnVal $s0
+  j nextTokenOut
+  nop
   nextTokenNotNum:
   #Eu nao sei o que eh isso
   j badCharError
@@ -202,26 +200,26 @@ openInputFile:
 jr $ra
 nop
 pushToken:
-	sw rCode	0($sp)
-	sw rVal 	4($sp)
-	addi $sp $sp 8
+  sw rCode 0($sp)
+  sw rVal  4($sp)
+  addi $sp $sp 8
 jr $ra
 nop	
 popToken:
-	addi $sp $sp -8
+  addi $sp $sp -8
 jr $ra
 nop
 peekToken:
-	lw rReturnCode -8($sp)
-	lw rReturnVal  -4($sp)
+  lw rReturnCode -8($sp)
+  lw rReturnVal  -4($sp)
 jr $ra
 nop
 
 badCharError:
-	POP($ra)
+  POP($ra)
   error(erroBadCharDesc)
 erroLer:
-	POP($ra)
+  POP($ra)
   error(erroRead)
 errorFile:
-	error(erroOpenFile)
+  error(erroOpenFile)
