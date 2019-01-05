@@ -22,21 +22,21 @@
     nop
   j UnstackingPriorityLoop
   nop
- 	UnstackingPriorityOut:
+  UnstackingPriorityOut:
     move rCode $s0
-  	jal pushToken
-  	nop
+    jal pushToken
+    nop
 .end_macro
 
 .data
-	ptr:	.word 0
-	space: .space 0x200000
-	prompt_file: .asciiz "Digite o nome do arquivo a ser lido(ou nao coloque nada para indicar que deve ser lida a entrada padrao):"
-	prompt_filename_too_big: .asciiz "Nome do arquivo muito grande(maximo 255 caracteres)"
-	prompt_expr: .asciiz "Digite a expressao a ser lida:"
-	prompt_what_do: .asciiz "O que fazer?\n0-Colocar a paretensis na expressao.\n1-Mostrar(em notacao) a arvore sintatica\n2-Escrever em notacao polonesa reversa\n3-Calcular o valor"
-	prompt_what_now: .asciiz "Desja fazer outro 'parseamento'?"
-	prompt_value: .asciiz "O valor obtido eh: "
+  ptr:	.word 0
+  space: .space 0x200000
+  prompt_file: .asciiz "Digite o nome do arquivo a ser lido(ou nao coloque nada para indicar que deve ser lida a entrada padrao):"
+  prompt_filename_too_big: .asciiz "Nome do arquivo muito grande(maximo 255 caracteres)"
+  prompt_expr: .asciiz "Digite a expressao a ser lida:"
+  prompt_what_do: .asciiz "O que fazer?\n0-Colocar a paretensis na expressao.\n1-Mostrar(em notacao) a arvore sintatica\n2-Escrever em notacao polonesa reversa\n3-Calcular o valor"
+  prompt_what_now: .asciiz "Desja fazer outro 'parseamento'?"
+  prompt_value: .asciiz "O valor obtido eh: "
 .text
 start:
 move $s7 $sp
@@ -107,8 +107,8 @@ configOut:
 #Isso descreve a mesma linguagem que o parser entende, soh que eh
 #Eu espero um numero ou um abre parentesis
 ShuntingLoopNum:
-	jal nextToken
-	nop
+  jal nextToken
+  nop
   beq rReturn iEOF erroEOF
   nop
   #Se for um numero, colocar na saida(no caso, montar arvore)   
@@ -138,7 +138,7 @@ ShuntingLoopOp:
   beq $t0 $zero  ShuntingNotOP1
   nop
     #Fazer um macro eh mais estrategico
-  	UnstackingPriority(iPriorityMaskOver1)
+    UnstackingPriority(iPriorityMaskOver1)
   j ShuntingLoopNum
   nop
   ShuntingNotOP1:
