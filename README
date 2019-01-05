@@ -31,8 +31,8 @@ A disposição dos parêntesis pode ser usada para verificar se o parser está l
 
 1 - Mostrar(em notacao) a arvore sintatica
 Essa opção imprimie uma expressão na notação "Labeled bracketing"[2] que, ao ser colocada em um site como algum da lista: 
-    http://mshang.ca/syntree/
-    http://www.ironcreek.net/phpsyntaxtree/
+	http://mshang.ca/syntree/
+	http://www.ironcreek.net/phpsyntaxtree/
 	https://yohasebe.com/rsyntaxtree/
 	...
 (Pesquisar na internet por "Syntax Tree Generator")
